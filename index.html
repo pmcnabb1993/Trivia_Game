@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Stranger Trivia</title>
+
+  <!-- Remember to link your stylesheets! -->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
+
+  <!-- jQuery Library -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  <!-- Link to Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <body class="background">
+
+  </head>
+  <body>
+
+  <!-- Begin Bootstrap Grid -->
+  <div id="wrapper">
+
+  <!-- Stranger Things Header -->
+  <header>
+    <div class="st">
+    <div class="st-top">
+      <div class="st-bound st-bound-full"></div>
+        <p>
+        <span class="st-drop st-stranger-s">S</span>
+        <span class="st-stranger-t">t</span>
+        <span class="st-stranger-r">r</span>
+        <span class="st-stranger-a">a</span>
+        <span class="st-stranger-n">n</span>
+        <span class="st-stranger-g">g</span>
+        <span class="st-stranger-e">e</span>
+        <span class="st-drop st-stranger-r-2">r</span>
+        </p>
+      <div class="st-bound st-bound-mini st-bound-left"></div>
+      <div class="st-bound st-bound-mini st-bound-right"></div>
+    </div>
+
+    <div class="st-bottom">
+      <p>
+      <span class="st-things-t">T</span>
+      <span class="st-things-h">r</span>
+      <span class="st-things-i">i</span>
+      <span class="st-things-n">v</span>
+      <span class="st-things-g">i</span>
+      <span class="st-things-s">a</span></p>
+    </div>
+    </div>
+  </header>
+
+  <!--Quiz Container-->
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="text-center" id="welcome"><strong>Welcome to Stranger Things Trivia!</strong></h1>
+      <h2 class="text-center"><button type="button" class="btn btn-danger" id="start_button">Start Game</button></h2>
+        <div><span id="timer"></span></div>
+        <div></div>
+	    <div id="question"></div>
+	    <div id="answers"></div>
+	    <div class="correct"></div>
+	    <div class="incorrect"></div>
+	    <div id="imageGif"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; Preston McNabb 2017</p>
+  </footer>
+
+
+
+
+
+
+<!-- end bootstrap grid -->
+</div>
+
+  <!-- Script -->
+  <script src="assets/javascript/app.js"></script>
+
+</body>
+
+</html>
