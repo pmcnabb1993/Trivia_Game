@@ -59,17 +59,18 @@
   </header>
 
   <!--Quiz Container-->
-  <div class="container">
-    <div class="jumbotron">
+  <div class="jumbotron">
+    <div class="container">
       <h1 class="text-center" id="welcome"><strong>Welcome to Stranger Things Trivia!</strong></h1>
-      <h2 class="text-center"><button type="button" class="btn btn-danger" id="start_button">Start Game</button></h2>
-        <div><span id="timer"></span></div>
+      <div class="row">
+        <h2 class="text-center"></h2>
+        <h3 class="text-center" id="netflix">How well do you know the hit Netflix show?</h3>
         <div></div>
-	    <div id="question"></div>
-	    <div id="answers"></div>
-	    <div class="correct"></div>
-	    <div class="incorrect"></div>
-	    <div id="imageGif"></div>
+      	    <div class="triviaArea col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+      	    </div>
+      	    <img class='center-block img-right' id="badge" src='assets/images/Badge.png' width="300" height="300">
+         </div>
+      </div>
     </div>
   </div>
 
@@ -78,13 +79,6 @@
     <p>&copy; Preston McNabb 2017</p>
   </footer>
 
-
-
-
-
-
-<!-- end bootstrap grid -->
-</div>
 
   <!-- Script -->
   <script src="assets/javascript/app.js"></script>

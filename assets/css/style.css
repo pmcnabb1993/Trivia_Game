@@ -12,6 +12,19 @@
   
 }
 
+.answer:hover {
+  background: #FFE4E1;
+  border: 2px solid red;
+}
+.answer {
+  padding-top: 7px;
+  height: 45px;
+  color: black;
+  padding-left: 14px;
+  background-color: white;
+  border-radius: 20px;
+}
+
 #welcome {
   font-size: 50px;
 }
@@ -30,10 +43,48 @@
   margin-bottom: 20px
 }
 
-button:hover {
-  background: #FFE4E1;
-  border: 2px solid red;
+.jumbotron {
+  border-radius: 10px;
+  margin-bottom: 70px;
+  text-align: center;
+  box-sizing: border-box;
+  height: 600px;
+  width: 1000px;
+  display: inline-block;
+  vertical-align: middle;
+
+
 }
+
+.footer {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 100px
+
+}
+.img-wrong {
+  margin-top: 40px;
+}
+
+.first-answer {
+  margin-top: 40px;
+}
+
+.reset-button {
+  margin-top: 40px;
+}
+
+.summary-correct {
+  margin-top: 40px;
+}
+
+
+
+
+
+
 
 /* Begin Stranger Things Header*/
 .st {
@@ -143,23 +194,4 @@ button:hover {
 }
 
 /* End Stranger Things Header*/ 
-
-.jumbotron {
-  border-radius: 10px;
-  margin-bottom: 70px;
-  text-align: center;
-
-
-}
-
-.footer {
-  text-align: center;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 100px
-
-}
-
-
 

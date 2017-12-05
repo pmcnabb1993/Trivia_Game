@@ -1,214 +1,215 @@
 $(document).ready(function() {
 
-$("#start_button").click(function(){
-  $(this).hide();
-  //triviaGame.nextQuestion()//
-  triviaGame.timerTrivia()
-  //this.randomQuestions = this.randomQuestionList();
-});
-// Clicking a wrong answer
-    $("#answers").on("click", "#incorrect", function() {trivia.clickedAnswer("wrong")});
+function initialScreen() {
+    startTrivia = "<p class='text-center main-button-container'><a class='btn btn-danger btn-sm start-button' href='#' role='button'>Start Trivia</a></p>";
+    $(".triviaArea").html(startTrivia);
 
-    // Clicking the correct answer
-    $("#answers").on("click", "#correct", function() {trivia.clickedAnswer("correct")});
+    
+ }
 
-    // Resets the game (this button appears when the game is over.)
-    $("#question").on("click", "#playagain", function() {trivia.resetGame()});
+
+initialScreen();
+
+
+})
 
 //Variables//
-var triviaGame = {
 
-triviaQuestions: 0,
+var startTrivia;
 
-counter: 11,
+var gameHtml; 
 
-randomQuestons: [],
+var counter = 20;
 
-currentQuestion: 0,
+//Array of questions//
+var questionArray = [
+"1. What night did Will Byers go missing?",
+"2. The mysterious research facility in Hawkins poses as The Department of _______?",
+"3. Who is the actress who plays Joyce Byers?",
+"4. How did Barb cut her hand shortly before she was taken by the monster?",
+"5. What year do the events of the first season take place in?",
+"6. Who opened the gate to the Upside Down?",
+"7. Which is Eleven's favorite food?",
+"8. Of these choices, who was the first to enter the Upside Down?",
+"9. Joyce was able to communicate with her son Will through the use of which of these?",
+"10.What does Steve Harrington use to style his hair?",];
 
-wins: 0,
+//Array of Answers//
+var answerArray = [
+//1//
+["October 20th", "October 31st", "November 6th", "November 15th",],
+//2//
+["Homeland Security", "Energy", "Public Health Services", "Education",],
+//3//
+["Jennifer Grey", "Elisabeth Shue", "Ally Sheedy", "Winona Ryder",],
+//4//
+["Broken wine glass", "Opening a beer can", "Tripping near the pool", "Steve Harringtons knife",],
+//5//
+["1982", "1983", "1984", "1989",],
+//6//
+["Dr. Brenner", "The Demogorgon", "Eleven", "Chief Hopper",],
+//7//
+["Hot Pockets", "Pop Tarts", "Eggo Waffles", "Pancakes",],
+//8//
+["Nancy Wheeler", "Jim Hopper", "Joyce Byers", "Mike Wheeler",],
+//9//
+["Ouija board", "Walkie Talkie", "Bonfire", "Electricity",],
+//10//
+["Leave-In Conditioner", "Farrah Fawcett Spray", "Revlon Flex Shampoo", "Stiff Stuff Gel",],
+];
 
-losses: 0,
+//Array of Images//
+var imageArray = ["<img class='center-block img-right' src='assets/images/question1.gif'>",
+  "<img class='center-block img-right' src='assets/images/question2.gif'>",
+  "<img class='center-block img-right' src='assets/images/question3.gif'>",
+  "<img class='center-block img-right' src='assets/images/question4.gif'>",
+  "<img class='center-block img-right' src='assets/images/question5.gif'>",
+  "<img class='center-block img-right' src='assets/images/question6.gif'>",
+  "<img class='center-block img-right' src='assets/images/question7.gif'>",
+  "<img class='center-block img-right' src='assets/images/question8.gif'>",
+  "<img class='center-block img-right' src='assets/images/question9.gif'>",
+  "<img class='center-block img-right' src='assets/images/question10.gif'>",
+  ];
+
+//Array of correct Answers//
+var correctAnswers = [
+"C. November 6th",
+"B. Energy",
+"D. Winona Ryder",
+"B. Opening a beer can",
+"B. 1983",
+"C. Eleven",
+"C. Eggo Waffles",
+"A. Nancy Wheeler",
+"D. Electricity",
+"B. Farrah Fawcett Spray",
+];
+
+var questionCounter = 0;
+
+var selectedAnswer;
+
+var theTimer;
+
+var correctTally = 0;
+
+var incorrectTally = 0;
+
+var unansweredTally = 0;
+
+//Start button that starts timer, shows question, answers and hides elements//
+$("body").on("click", ".start-button", function(event){
+    event.preventDefault();  
+    generateHTML();
+
+    timerWrapper();
+    hideElement();
 
 
-//array of trivia questions//
-strangerQuestions: [{
-question: "What night did Will Byers go missing?",
-answers: ["October 20th", "October 31st", "November 6th", "November 15th" ],
-image:  "assets/images/question1.gif",
-validAnswer: 2
-}, {
-question:"The mysterious research facility in Hawkins poses as The Department of _______?",
-answers: ["Homeland Security", "Energy", "Public Health Services", "Education"],
-validAnswer: 1
+}); 
 
-}, {
-question:"Who is the actress who plays Joyce Byers?",
-answers: ["Jennifer Grey", "Elisabeth Shue", "Ally Sheedy", "Winona Ryder"],
-validAnswer: 3
+//function for clicking the answers//
+$("body").on("click", ".answer", function(event){
+    //answeredQuestion = true;
+    selectedAnswer = $(this).text();
+    if(selectedAnswer === correctAnswers[questionCounter]) {
+        
 
-}, {
-question:"How did Barb cut her hand shortly before she was taken by the monster?",
-answers: ["Broken wine glass", "Opening a beer can", "Tripping near the pool", "Steve Harringtons knife"],
-validAnswer: 1
-
-}, {
-question:"What year do the events of the first season take place in?",
-answers: ["1982", "1983", "1984", "1989"],
-validAnswer: 1
-
- }, {
-question:"Who opened the gate to the Upside Down?",
-answers: ["Dr. Brenner", "The Demogorgon", "Eleven", "Chief Hopper"],
-validAnswer: 2
-
-}, {
-question:"Which is Eleven's favorite food?",
-answers: ["Hot Pockets", "Pop Tarts", "Eggo Waffles", "Pancakes"],
-validAnswer: 2
-
-}, {
-question:"Of these choices, who was the first to enter the Upside Down?",
-answers: ["Nancy Wheeler", "Jim Hopper", "Joyce Byers", "Mike Wheeler"],
-validAnswer: 0
-
-}, {
-question:"Joyce was able to communicate with her son Will through the use of which of these?",
-answers: ["Ouija board", "Walkie Talkie", "Bonfire", "Electricity"],
-validAnswer: 3
-
-}, {
-question:"What does Steve Harrington use to style his hair?",
-answers: ["Leave-In Conditioner", "Farrah Fawcett Spray", "Revlon Flex Shampoo", "Stiff Stuff Gel"],
-validAnswer: 1
- 
-},],
-
-
-
-//Timer Countdown function//
-timerTrivia: function() {
-  let count = 11;            
-  this.counter = setInterval(function() {
-    if (count > -1) {
-      $("#timer").html("Time remaining: " + count + " seconds");
-      count--;
-      }
-    else {
-      clearInterval(triviaGame.counter);
-      triviaGame.clickedAnswer("noAnswer");
-      }
-    }, 1000);
-},
-
-//Function to hide number of right and wrong answers until the end//
-startGame: function() {
-    
-},
-
-//Function to pick a question from the array//
-loadQuestion: function () {
-    this.currentQuestion = this.randomQuestions[this.triviaQuestions];
-    $("#timer").html("Time remaining: " + count + " seconds");
-    //add new question if use hasn't answered all 10//
-    if(this.triviaQuestions < this.randomQuestions.length) {
-      this.timer();
-      $("#question").text(this.triviaQuestions[this.currentQuestion].question);
-      this.randomizeAnswers(this.currentQuestion);
-      } 
-      else{
-        this.finishGame();
-      }
-},
-
-finishGame: function() {
-  $("#question").html("<button id='playagain' class='btn btn-primary'>Play Again</button>");            
-    },
-
-clickedAnswer: function (userAnswer) {
-    $("#question").empty ();
-    $("#answers").empty();
-    $("#imageGif").html(this.strangerQuestions[this.currentQuestion].image)
-    clearInterval(this.counter);
-    this.completedQuestions++;
-
-    $('#question').on('click', 'button', function(e){
-    userAnswer = $(this).data("id");
-    strangerQuestion[0].validAnswer;
-
-    if(userAnswer != strangerQuestions[0].validAnswer) {
-      $('#incorrect').text("Wrong Answer! The correct answer is" + this.triviaQuestions[this.currentQuestion].validAnswer);
-    } 
-      else if (userAnswer === strangerQuestions[0].validAnswer) {
-        $('#correct').text("Correct!!!");
+        clearInterval(theTimer);
+        generateWin();
     }
-      else{
-        $("incorrect").html("You ran out of time!")
-      }
+    else {
+        
+        clearInterval(theTimer);
+        generateLoss();
+    }
+}); 
 
-  });
+//reset button on click function//
+$("body").on("click", ".reset-button", function(event){
+    resetGame();
+}); 
 
-    setTimeout(function(){
-        $("#imageGif").empty();
-        $("incorrect").empty();
-        $("correct").empty();
-        triviaGame.addQuestion()
 
-    }, 5000);
+//Function to hide badge image//
+function hideElement(){
+    $("#badge").hide();
+}
 
-},
+//function to generate HTML for running out of time//
+function generateLossDueToTimeOut() {
+    unansweredTally++;
+    gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>You ran out of time!  The correct answer was: " + correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
+    $(".triviaArea").html(gameHTML);
+    setTimeout(wait, 4000);  
+}
 
-//Function to get answers//
-randomizeAnswers: function(questionNumber) {
-            let array = this.randomFour();
-            $("#answers").html("<ol><li></li><li></li><li></li><li></li></ol>");
-            for (var i = 0; i<3; i++) {
-                $("ol").children().eq(array[i]).text(trivia.gameQuestions[questionNumber].incorrectAnswers[i]);
-                $("ol").children().eq(array[i]).attr("id", "wrong");
-            }
-            $("ol").children().eq(array[3]).text(trivia.gameQuestions[questionNumber].correctAnswer);
-            $("ol").children().eq(array[3]).attr("id", "correct");
-        },
-randomQuestionList: function() {
-            var randomSeven = [];
-            while (randomSeven.length < 7) {
-                let number = Math.floor(Math.random()*this.gameQuestions.length);
-                if (randomSeven.indexOf(number) === -1) {
-                    randomSeven.push(number);
-                }
-            }
-            return randomSeven;
-        },
-        // This function resets the game
-        resetGame: function() {
-            this.wins = 0;
-            this.losses = 0;
-            this.completedQuestions = 0;
-            this.currentQuestion = 0;
-            this.randomQuestions = this.randomQuestionList();            
-            this.addQuestion();
+//function to generate HTML for answering correctly//
+function generateWin() {
+    correctTally++;
+    gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Correct! The answer is: " + correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
+    $(".triviaArea").html(gameHTML);
+    setTimeout(wait, 4000);  
+}
 
-        },
-        // Calls Giphy API and posts gif after a question has been answered, or timer runs out
-        giphyAPI: function(searchTerm) {
-            var giphyURL = "https://api.giphy.com/v1/gifs/search?api_key=zJ4WnHswLS4shydUPsDoUOqYFXlN1IaB&limit=1&q=" + searchTerm;      
-            $.ajax({
-                url: giphyURL,
-                method: "GET",
-                }).done(function(response) {
-                    $("#gif").html("<img id='gifinsert' class='img-responsive' src='" + response.data[0].images.downsized_large.url + "'/>");
-                }
-            );
+//function to generate HTML for answering wrong//
+function generateLoss() {
+    incorrectTally++;
+    gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Wrong! The correct answer is: "+ correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
+    $(".triviaArea").html(gameHTML);
+    setTimeout(wait, 4000); 
+}
+
+//function to generate HTML for the questions//
+function generateHTML() {
+    gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>20</span></p><p class='text-center'>" + questionArray[questionCounter] + "</p><p class='first-answer answer'>A. " + answerArray[questionCounter][0] + "</p><p class='answer'>B. "+answerArray[questionCounter][1]+"</p><p class='answer'>C. "+answerArray[questionCounter][2]+"</p><p class='answer'>D. "+answerArray[questionCounter][3]+"</p>";
+    $(".triviaArea").html(gameHTML);
+}
+
+//function to wait before cycle through question array//
+function wait() {
+    if (questionCounter < 9) {
+    questionCounter++;
+    generateHTML();
+    counter = 20;
+    timerWrapper();
+    }
+    else {
+        finalScreen();
+    }
+}
+
+//function for 20 second timer//
+function timerWrapper() {
+    theTimer = setInterval(twentySeconds, 1000);
+    function twentySeconds() {
+        if (counter === 0) {
+            clearInterval(theTimer);
+            generateLossDueToTimeOut();
         }
-    };
+        if (counter > 0) {
+            counter--;
+        }
+        $(".timer").html(counter);
+    }
+}
 
-    // ---------------FUNCTION TO RUN ON PAGELOAD--------------
-    triviaGame.startGame();
+//function to display the final screen with the tally of correct answers//
+function finalScreen() {
+    gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>All done, here's how you did!" + "</p>" + "<p class='summary-correct'>Correct Answers: " + correctTally + "</p>" + "<p>Wrong Answers: " + incorrectTally + "</p>" + "<p>Unanswered: " + unansweredTally + "</p>" + "<p class='text-center reset-button-container'><a class='btn btn-danger btn-sm  reset-button' href='button' role='button'>Reset The Quiz!</a></p>";
+    $(".triviaArea").html(gameHTML);
+}
 
-      
-    
-});
-
+//function to reset game//
+function resetGame() {
+    questionCounter = 0;
+    correctTally = 0;
+    incorrectTally = 0;
+    unansweredTally = 0;
+    counter = 20;
+    generateHTML();
+    timerWrapper();
+}
 
 
 
